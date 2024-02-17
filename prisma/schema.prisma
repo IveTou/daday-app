@@ -27,14 +27,14 @@ model Column {
   order   Int
   board   Board?    @relation(fields: [boardId], references: [id])
   boardId String?
-  project Project[]
+  projects Project[]
 }
 
 model Project {
   id          String     @id @default(cuid())
   title       String
   description String
-  columns     Column     @relation(fields: [columnId], references: [id])
+  column      Column     @relation(fields: [columnId], references: [id])
   author      User       @relation(fields: [userId], references: [id])
   tasks       Task[]
   team        Profile[]

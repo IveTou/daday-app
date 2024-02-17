@@ -1,6 +1,8 @@
 import Link from "next/link";
 import prisma from '../../../../lib/prisma';
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
+import { Board, Column } from "@prisma/client";
+import { Author } from "next/dist/lib/metadata/types/metadata-types";
 
 const getBoard = async (id: string) => {
   const board = await prisma.board.findUnique({
@@ -13,7 +15,9 @@ const getBoard = async (id: string) => {
           select: {
             name: true,
             order: true,
-            project: true
+            projects: {
+              select: { title: true, id: true }
+            }
           } 
         }
       },
@@ -39,7 +43,12 @@ export default async function Board({ params }:{ params: Params}) {
         </section>
         <section>
           <ul>
-            {columns?.map(({ name, order }) => <li>{name}</li>)}
+            {columns?.map(({ name, order, projects }, index) => (
+              <li key={index}>
+                <h3><strong>{name}</strong></h3>
+                {projects.map(({ title, id }) => <p><Link href={`../project/${id}`}>{title}</Link></p>)}
+              </li>
+            ))}
           </ul>
         </section>
       </div>
