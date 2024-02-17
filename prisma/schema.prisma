@@ -31,18 +31,18 @@ model Column {
 }
 
 model Project {
-  id          String    @id @default(cuid())
+  id          String     @id @default(cuid())
   title       String
   description String
-  columns     Column    @relation(fields: [columnId], references: [id])
-  author      User      @relation(fields: [userId], references: [id])
+  columns     Column     @relation(fields: [columnId], references: [id])
+  author      User       @relation(fields: [userId], references: [id])
   tasks       Task[]
   team        Profile[]
   comments    Comment[]
-  activity    String[]
-  createdAt   DateTime  @default(now()) @map(name: "created_at")
-  updatedAt   DateTime  @updatedAt @map(name: "updated_at")
-  board       Board?    @relation(fields: [boardId], references: [id])
+  activity    Activity[]
+  createdAt   DateTime   @default(now()) @map(name: "created_at")
+  updatedAt   DateTime   @updatedAt @map(name: "updated_at")
+  board       Board?     @relation(fields: [boardId], references: [id])
   boardId     String?
   columnId    String
   userId      String
@@ -58,17 +58,18 @@ model Task {
 }
 
 model Profile {
-  id        String    @id @default(cuid())
+  id        String     @id @default(cuid())
   name      String?
-  email     String?   @unique
+  email     String?    @unique
   addess    String?
   phone     String?
-  createdAt DateTime  @default(now()) @map(name: "created_at")
-  updatedAt DateTime  @updatedAt @map(name: "updated_at")
-  project   Project?  @relation(fields: [projectId], references: [id])
+  createdAt DateTime   @default(now()) @map(name: "created_at")
+  updatedAt DateTime   @updatedAt @map(name: "updated_at")
+  project   Project?   @relation(fields: [projectId], references: [id])
   projectId String?
   user      User[]
   comment   Comment[]
+  Activity  Activity[]
 }
 
 model User {
@@ -90,6 +91,34 @@ model Comment {
   updatedAt DateTime @updatedAt @map(name: "updated_at")
   project   Project? @relation(fields: [projectId], references: [id])
   projectId String?
+}
+
+model Activity {
+  id          String   @id @default(cuid())
+  author      Profile  @relation(fields: [authorId], references: [id])
+  authorId    String
+  createdAt   DateTime @default(now()) @map(name: "created_at")
+  updatedAt   DateTime @updatedAt @map(name: "updated_at")
+  action      Action
+  entity      Entities
+  description String
+  Project     Project? @relation(fields: [projectId], references: [id])
+  projectId   String?
+}
+
+enum Action {
+  CREATE
+  DELETE
+  UPDATE
+}
+
+enum Entities {
+  BOARD
+  TASK
+  COLUMN
+  COMMENT
+  TITLE
+  DESCRIPTION
 }
 
 enum Role {
