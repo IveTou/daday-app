@@ -5,11 +5,10 @@ export default function Home() {
   return (
     <main className={styles.main}>
       <div className={styles.description}>
-        <p>
-          Access List of Boards
-        </p>
         <div>
           <Link href='/boards'> Go to Boards</Link>
+          <Link href="/api/auth/login">Login</Link>
+          <Link href="/api/auth/logout">Logout</Link>
         </div>
       </div>
     </main>
