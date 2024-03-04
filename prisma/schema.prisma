@@ -73,14 +73,14 @@ model Profile {
 }
 
 model User {
-  id        String    @id @default(cuid())
-  profile   Profile?  @relation(fields: [profileId], references: [id])
-  profileId String?
-  createdAt DateTime  @default(now()) @map(name: "created_at")
-  updatedAt DateTime  @updatedAt @map(name: "updated_at")
-  role      Role      @default(USER)
-  boards    Board[]
-  project   Project[]
+  id                  String    @id @default(cuid())
+  profile             Profile?  @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  profileId           String?
+  createdAt           DateTime  @default(now()) @map(name: "created_at")
+  updatedAt           DateTime  @updatedAt @map(name: "updated_at")
+  role                Role      @default(USER)
+  boards              Board[]
+  project             Project[]
 }
 
 model Comment {
