@@ -22,11 +22,11 @@ model Board {
 }
 
 model Column {
-  id      String    @id @default(cuid())
-  name    String
-  order   Int
-  board   Board?    @relation(fields: [boardId], references: [id])
-  boardId String?
+  id       String    @id @default(cuid())
+  name     String
+  order    Int
+  board    Board?    @relation(fields: [boardId], references: [id])
+  boardId  String?
   projects Project[]
 }
 
@@ -37,7 +37,6 @@ model Project {
   column      Column     @relation(fields: [columnId], references: [id])
   author      User       @relation(fields: [userId], references: [id])
   tasks       Task[]
-  team        Profile[]
   comments    Comment[]
   activity    Activity[]
   createdAt   DateTime   @default(now()) @map(name: "created_at")
@@ -57,7 +56,7 @@ model Task {
   projectId String?
 }
 
-model Profile {
+model User {
   id        String     @id @default(cuid())
   name      String?
   email     String?    @unique
@@ -65,27 +64,16 @@ model Profile {
   phone     String?
   createdAt DateTime   @default(now()) @map(name: "created_at")
   updatedAt DateTime   @updatedAt @map(name: "updated_at")
-  project   Project?   @relation(fields: [projectId], references: [id])
-  projectId String?
-  user      User[]
+  role      Role       @default(USER)
+  boards    Board[]
   comment   Comment[]
-  Activity  Activity[]
-}
-
-model User {
-  id                  String    @id @default(cuid())
-  profile             Profile?  @relation(fields: [profileId], references: [id], onDelete: Cascade)
-  profileId           String?
-  createdAt           DateTime  @default(now()) @map(name: "created_at")
-  updatedAt           DateTime  @updatedAt @map(name: "updated_at")
-  role                Role      @default(USER)
-  boards              Board[]
-  project             Project[]
+  activity  Activity[]
+  projects   Project[]
 }
 
 model Comment {
   id        String   @id @default(cuid())
-  author    Profile  @relation(fields: [authorId], references: [id])
+  author    User     @relation(fields: [authorId], references: [id])
   authorId  String
   createdAt DateTime @default(now()) @map(name: "created_at")
   updatedAt DateTime @updatedAt @map(name: "updated_at")
@@ -95,7 +83,7 @@ model Comment {
 
 model Activity {
   id          String   @id @default(cuid())
-  author      Profile  @relation(fields: [authorId], references: [id])
+  author      User     @relation(fields: [authorId], references: [id])
   authorId    String
   createdAt   DateTime @default(now()) @map(name: "created_at")
   updatedAt   DateTime @updatedAt @map(name: "updated_at")

@@ -2,7 +2,8 @@ import { getSession, updateSession } from '@auth0/nextjs-auth0';
 import { redirect } from 'next/navigation'
 //import prisma from '../../../../lib/prisma';
 
-async function createUserProfile() {
+
+async function createUserProfile(formData: FormData) {
   'use server';
   const session = await getSession();
 
@@ -16,6 +17,7 @@ export default async function CreateUserProfile() {
 
   return (
     <form action={createUserProfile}>
+      <input type="text" name="name" />
       <button type="submit">Update User</button>
     </form>
   );
