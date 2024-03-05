@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import { getSession } from '@auth0/nextjs-auth0/edge';
+import { getSession, updateSession } from '@auth0/nextjs-auth0/edge';
 //import { jwtDecode } from "jwt-decode";
 
 export async function middleware(request: NextRequest) {
@@ -12,6 +12,11 @@ export async function middleware(request: NextRequest) {
     console.log('decoded sub', decoded.sub)
     console.log('session', session.user.email, session.user.sub)
   } */
+
+  if (!session?.user.user_id && !request.nextUrl.pathname.startsWith('/profile/create')) {
+    return NextResponse.redirect(new URL('/profile/create', request.url))
+  }
+
 
   if (session?.user || request.nextUrl.pathname.endsWith('/')) {
     return NextResponse.next();
