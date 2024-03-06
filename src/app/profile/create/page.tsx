@@ -1,24 +1,31 @@
-import { getSession, updateSession } from '@auth0/nextjs-auth0';
-import { redirect } from 'next/navigation'
-//import prisma from '../../../../lib/prisma';
+'use client'
+import { useFormState } from 'react-dom';
+import { createUser } from './actions';
 
-
-async function createUserProfile(formData: FormData) {
-  'use server';
-  const session = await getSession();
-
-  if(session) {
-    await updateSession({ ...session, user: { ...session.user, user_id: session.user.sub }})
-    redirect('/')
-  }
+const initialState = {
+  errors: '',
+  data: undefined
 }
 
 export default async function CreateUserProfile() {
+  const [state, formAction] = useFormState(createUser, initialState)
 
+  console.log('state',state)
   return (
-    <form action={createUserProfile}>
+    <form action={formAction}>
       <input type="text" name="name" />
+      <input type="text" name="email" />
+      <input type="text" name="phone" />
+      <input type="text" name="address" />
       <button type="submit">Update User</button>
     </form>
   );
 }
+
+
+//Useful
+
+/* if(session) {
+  await updateSession({ ...session, user: { ...session.user, user_id: session.user.sub }})
+  redirect('/')
+} */
