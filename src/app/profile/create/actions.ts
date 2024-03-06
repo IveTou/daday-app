@@ -1,7 +1,7 @@
 'use server'
+import { createUserDTO } from '@/data/user-dto';
 import { getSession } from '@auth0/nextjs-auth0';
 import { z } from 'zod'
-import prisma from '../../../../lib/prisma';
 
 const schema = z.object({
   name: z.string({
@@ -19,36 +19,27 @@ const schema = z.object({
 })
 
 export async function createUser(prevState: any, formData: FormData) {
-  try {
-    const session = await getSession();
-    const userId = session?.user.sub
+  const session = await getSession();
+  const userId = session?.user.sub
 
-    if(!userId) throw new Error()
+  if(!userId) throw new Error()
 
-    const validatedFields = schema.safeParse({
-      id: userId,
-      name: formData.get('name'),
-      email: formData.get('email') || session?.user.email,
-      address: formData.get('address'),
-      phone: formData.get('phone'),
-    })
+  const validatedFields = schema.safeParse({
+    id: userId,
+    name: formData.get('name'),
+    email: formData.get('email') || session?.user.email,
+    address: formData.get('address'),
+    phone: formData.get('phone'),
+  })
 
-    if (!validatedFields.success) {
-      return {
-        errors: validatedFields.error.flatten().fieldErrors,
-      }
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
     }
-
-    const user = await prisma.user.create({
-      data: {
-        id: session?.user.su,
-        ...validatedFields.data
-      }
-    })
-
-    return { data: user }
-  } catch (e) {
-    return { errors: 'Server error: ' + e }
   }
 
+  const { success, error, data } = await createUserDTO(validatedFields.data)
+
+  //TODO: Take data to redux store
+  return { success, errors: error }
 }
