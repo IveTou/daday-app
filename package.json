@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prisma-generate": "npx prisma generate"
+    "prisma-generate": "npx prisma generate",
+    "prisma-db-push": "npx prisma db push"
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^3.5.0",
