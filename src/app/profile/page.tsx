@@ -8,7 +8,7 @@ import { getUser } from "./actions";
 type ProfileData = {
   id: string
   name: string
-  email: string
+  email: string | null
   address: string | null
   phone: string | null
   role: string

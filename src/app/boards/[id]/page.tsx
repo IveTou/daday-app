@@ -9,7 +9,7 @@ const getBoard = async (id: string) => {
       where: { id: id },
       include: {
         author: {
-          select: { profile: true },
+          select: { name: true },
         },
         columns: {
           select: {
@@ -39,7 +39,7 @@ export default async function Board({ params }:{ params: Params}) {
         <br/>
         <section>
           <h2>Titulo: <span>{title}</span></h2>
-          <p>Autor: <span>{author?.profile?.name}</span></p>
+          <p>Autor: <span>{author?.name}</span></p>
         </section>
         <section>
           <ul>
