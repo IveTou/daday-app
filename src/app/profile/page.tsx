@@ -34,7 +34,13 @@ export default function ProfileClient() {
   }, [])
 
 
-  if (error) return <div>{error}</div>;
+  if (error) {
+    return (
+      <div>
+        <h2>{error}</h2>
+      </div>
+    )
+  }
 
   return (
     user && (

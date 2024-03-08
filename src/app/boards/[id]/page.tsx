@@ -1,5 +1,5 @@
 import Link from "next/link";
-import prisma from '../../../lib/prisma';
+import prisma from '../../../lib/prisma/prisma';
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import { Board, Column } from "@prisma/client";
 import { Author } from "next/dist/lib/metadata/types/metadata-types";
