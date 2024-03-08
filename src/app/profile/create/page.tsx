@@ -18,6 +18,7 @@ export default async function CreateUserProfile() {
     if(state.success) {
       router.push('/profile')
     }
+
   }, [state.success])
 
   return (

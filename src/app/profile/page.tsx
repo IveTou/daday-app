@@ -1,53 +1,21 @@
 'use client';
 
-import { useEffect, useState } from "react";
-import { getUser } from "./actions";
-
-//import { useUser } from '@auth0/nextjs-auth0/client';
-
-type ProfileData = {
-  id: string
-  name: string
-  email: string | null
-  address: string | null
-  phone: string | null
-  role: string
-}
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "@/lib/redux/store";
+import { getProfile } from "@/lib/redux/slices/profileSlice";
 
 export default function ProfileClient() {
-  const [user, setUser] = useState<ProfileData>()
-  const [error, setError] = useState<string>('')
-  //const { user, error, isLoading } = useUser();
+  const dispatch = useDispatch()
+  const { profile } = useSelector((state) => state.profile)
 
   useEffect(() => {
-    const getData = async () => {
-      const { data, error, errorMessage } = await getUser()
-
-      if(error) {
-        setError(errorMessage)
-      }
-
-      if(data) setUser(data)
-    }
-
-    getData()
+    dispatch(getProfile())
   }, [])
 
-
-  if (error) {
-    return (
-      <div>
-        <h2>{error}</h2>
-      </div>
-    )
-  }
-
   return (
-    user && (
       <div>
-        <h2>{user.name}</h2>
-        <p>{user.email}</p>
+        <h2>{profile.name}</h2>
+        <p>{profile.email}</p>
       </div>
-    )
-  );
+  )
 }

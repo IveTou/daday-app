@@ -2,6 +2,7 @@
 import 'server-only'
 import { getCurrentUser } from "./auth"
 import { UserDTO } from './types'
+import prisma from '@/lib/prisma/prisma'
 
 // Secret keys can be stored in environment variables but only the data access layer should access process.env in this approach.import prisma from '@/lib/prisma'
 // Considerate using dependency injection here instead of using Prisma dependency
