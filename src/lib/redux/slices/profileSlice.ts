@@ -25,18 +25,18 @@ const profileSlice = createSlice({
   name: "profile",
   initialState,
   reducers: {
-    getProfileSuccess(state, action) {
+    setProfileSuccess(state, action) {
       state.profile = action.payload
     },
   },
 })
 
 
-export const { getProfileSuccess } = profileSlice.actions
+export const { setProfileSuccess } = profileSlice.actions
 
 export default profileSlice.reducer
 
-export function getProfile() {
+export function setProfile() {
   return async (dispatch: Dispatch) => {
     try {
       const { data, error, errorMessage } = await getUser()
@@ -45,7 +45,7 @@ export function getProfile() {
         throw new Error(errorMessage)
       }
 
-      dispatch(getProfileSuccess(data));
+      dispatch(setProfileSuccess(data));
     } catch (error) {
       console.error("Error fetching profile resources:", error);
     }

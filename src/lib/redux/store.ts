@@ -22,4 +22,6 @@ const { dispatch } = store
 
 const useSelector: TypedUseSelectorHook<RootState> = useAppSelector
 const useDispatch = () => useAppDispatch<AppDispatch>()
+
+//Store just is keept between client navigation
 export { store, dispatch, useSelector, useDispatch }

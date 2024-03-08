@@ -40,5 +40,5 @@ export async function createUser(prevState: any, formData: FormData) {
 
   const { success, error, data } = await createUserDTO(validatedFields.data)
 
-  return { success, errors: error }
+  return { success, errors: error, data }
 }
