@@ -1,8 +1,10 @@
 'use client';
 
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "@/lib/redux/store";
 import { getProfile } from "@/lib/redux/slices/profileSlice";
+import isEmpty from "@/helpers/isEmpty";
+import Link from "next/link";
 
 export default function ProfileClient() {
   const dispatch = useDispatch()
@@ -11,6 +13,17 @@ export default function ProfileClient() {
   useEffect(() => {
     dispatch(getProfile())
   }, [])
+
+  const isProfileEmpty = useMemo(() =>  isEmpty(profile, ['name', 'email']), [profile])
+
+  if(isProfileEmpty) {
+    return (
+      <>
+        <h2>User not found</h2>
+        <Link href='/create'>Create yours!</Link>
+      </>
+    )
+  }
 
   return (
       <div>

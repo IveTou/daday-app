@@ -39,8 +39,6 @@ export async function createUser(prevState: any, formData: FormData) {
   }
 
   const { success, error, data } = await createUserDTO(validatedFields.data)
-  console.log(success, error, data)
 
-  //TODO: Take data to redux store
   return { success, errors: error }
 }
