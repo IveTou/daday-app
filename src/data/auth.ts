@@ -7,6 +7,5 @@ export const getCurrentUser = cache(async () => {
   const userId = session?.user.sub
 
   //Get user permitions provided externaly
-
   return new User(userId/*, role */);
 });

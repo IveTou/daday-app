@@ -31,12 +31,12 @@ export async function createUserDTO(userData: UserDTO) {
   }
 }
 
-export async function getUserDTO() {
+export async function getUserDTO(id?: string) {
   try {
     const currentUser = await getCurrentUser()
 
     const user = await prisma.user.findUnique({
-      where: { id: currentUser.id },
+      where: { id: id ?? currentUser.id },
     })
 
     return { data: user }
