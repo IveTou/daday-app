@@ -35,11 +35,15 @@ export async function getUserDTO(id?: string) {
   try {
     const currentUser = await getCurrentUser()
 
-    const user = await prisma.user.findUnique({
-      where: { id: id ?? currentUser.id },
-    })
+    if (id ?? currentUser.id) {
+      const user = await prisma.user.findUnique({
+        where: { id: id ?? currentUser.id },
+      })
 
-    return { data: user }
+      return { data: user }
+    }
+
+    throw new Error()
   } catch (e) {
     return { error: true, errorMessage: 'User not found' }
   }
