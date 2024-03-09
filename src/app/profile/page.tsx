@@ -1,8 +1,8 @@
 'use client';
 
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "@/lib/redux/store"
-import { setProfile } from "@/lib/redux/slices/profileSlice"
+import { useDispatch, useSelector } from "@/shared/lib/redux/store"
+import { setProfile } from "@/shared/lib/redux/slices/profileSlice"
 import CreateProfile from "@/components/Forms/CreateProfile";
 import { createProfile } from "./actions";
 import Modal from "@/components/Modal";

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { UserProvider } from '@auth0/nextjs-auth0/client';
 import Header from '../components/Header'
-import { Providers } from "@/lib/redux/provider";
+import { Providers } from "@/shared/lib/redux/provider";
 
 const inter = Inter({ subsets: ["latin"] });
 

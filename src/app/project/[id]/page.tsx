@@ -1,10 +1,6 @@
-import Link from "next/link";
-import prisma from '../../../lib/prisma/prisma';
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 
-export default async function Project({ params }:{ params: Params}) {
-
-  console.log(params.id)
+export default function Project({ params }:{ params: Params}) {
   return (
     <main>
       <div>

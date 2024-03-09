@@ -1,5 +1,5 @@
 import Link from "next/link";
-import prisma from '../../lib/prisma/prisma';
+import prisma from '../../shared/lib/prisma/prisma';
 import { getSession } from '@auth0/nextjs-auth0';
 
 

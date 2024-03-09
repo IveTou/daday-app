@@ -1,8 +1,8 @@
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { useFormState } from 'react-dom'
-import { setProfileSuccess } from "@/lib/redux/slices/profileSlice"
-import { useDispatch } from '@/lib/redux/store'
+import { setProfileSuccess } from "@/shared/lib/redux/slices/profileSlice"
+import { useDispatch } from '@/shared/lib/redux/store'
 import { ProfileType, FieldProfileErrorsType } from '@/entities/user/types'
 
 
