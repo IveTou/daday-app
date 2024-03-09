@@ -1,13 +1,12 @@
 import { NextResponse } from 'next/server'
-import { cache } from 'react';
-import type { NextRequest } from 'next/server'
+import { NextRequest } from 'next/server'
 import { Session, getSession } from '@auth0/nextjs-auth0/edge';
 
 export async function middleware(request: NextRequest) {
-  const response = NextResponse.next();
-  const session = await getSession(request, response);
+  const session = await getSession(request, NextResponse.next());
 
   const userSession = await getUserProfileBySession(session, request)
+  const isProfileTrue = Boolean(request.nextUrl.searchParams.get('profile'))
 
   if (request.nextUrl.pathname.endsWith('/')) {
     return NextResponse.next();
@@ -15,6 +14,10 @@ export async function middleware(request: NextRequest) {
 
   if (!session?.user && !request.nextUrl.pathname.startsWith('/api/auth/login')) {
     return NextResponse.redirect(new URL('/api/auth/login', request.url))
+  }
+
+  if(session?.user && userSession && !isProfileTrue) {
+    return NextResponse.redirect(new URL('?profile=true', request.url))
   }
 }
 
