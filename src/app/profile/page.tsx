@@ -1,31 +1,38 @@
 'use client';
 
 import { useEffect } from "react";
-import Link from "next/link"
 import { useDispatch, useSelector } from "@/lib/redux/store"
 import { setProfile } from "@/lib/redux/slices/profileSlice"
+import CreateProfile from "@/components/Forms/CreateProfile";
+import { createProfile } from "./actions";
+import Modal from "@/components/Modal";
+import { useModal } from "@refinedev/core";
 
 export default function ProfileClient() {
   const dispatch = useDispatch()
   const { profile } = useSelector((state) => state.profile)
+  const { show, close, visible } = useModal()
 
   useEffect(() => {
     dispatch(setProfile())
   }, [])
 
-  if(!profile.id) {
+  if(!profile) {
     return (
       <>
         <h2>User not found</h2>
-        <Link href='/profile/create'>Create yours!</Link>
+        <button onClick={show}>open</button>
+        <Modal visible={visible} close={close}>
+          <CreateProfile action={createProfile} />
+        </Modal>
       </>
     )
   }
 
   return (
-      <div>
-        <h2>{profile.name}</h2>
-        <p>{profile.email}</p>
-      </div>
+    <div>
+      <h2>{profile.name}</h2>
+      <p>{profile.email}</p>
+    </div>
   )
 }

@@ -1,37 +1,30 @@
-'use client'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { useFormState } from 'react-dom'
-import { createUser } from './actions'
 import { setProfileSuccess } from "@/lib/redux/slices/profileSlice"
-import { useDispatch, useSelector } from '@/lib/redux/store'
+import { useDispatch } from '@/lib/redux/store'
+import { ProfileType, FieldProfileErrorsType } from '@/entities/user/types'
 
 
-const initialState = {
-  errors: {},
-  sucess: false
+const initialState: ActionDataState<ProfileType, FieldProfileErrorsType> = {
+  errors: undefined,
+  fieldErrors: undefined,
+  success: false,
+  data: undefined
 }
 
-export default function CreateUserProfile() {
+export default function CreateProfile({ action } : { action: (prevState: any, formData: FormData ) => Promise<ActionDataState<ProfileType, FieldProfileErrorsType>> }) {
   const router = useRouter()
   const dispatch = useDispatch()
-  const { profile } = useSelector((state) => state.profile)
-  const [state, formAction] = useFormState(createUser, initialState)
+  const [state, formAction] = useFormState(action, initialState)
 
-  useEffect(() => {
-    //Don't let them acces this page if they already have a profile
-    if(profile.id) {
-      router.push('/profile')
-    }
-
+   useEffect(() => {
     if(state.success) {
       dispatch(setProfileSuccess(state.data))
       router.push('/profile')
     }
 
-  }, [state.success, profile])
-
-  console.log(profile)
+  }, [state.success])
 
   return (
     <form action={formAction}>
@@ -44,10 +37,10 @@ export default function CreateUserProfile() {
   );
 }
 
-
 //Useful
 
 /* if(session) {
   await updateSession({ ...session, user: { ...session.user, user_id: session.user.sub }})
   redirect('/')
 } */
+

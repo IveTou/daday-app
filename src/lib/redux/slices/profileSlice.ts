@@ -1,4 +1,4 @@
-import { getUser } from "@/app/profile/actions"
+import { getProfile } from "@/app/profile/actions"
 import { createSlice, Dispatch } from "@reduxjs/toolkit"
 
 type ProfileState = {
@@ -39,7 +39,7 @@ export default profileSlice.reducer
 export function setProfile() {
   return async (dispatch: Dispatch) => {
     try {
-      const { data, error, errorMessage } = await getUser()
+      const { data, error, errorMessage } = await getProfile()
 
       if(error) {
         throw new Error(errorMessage)
