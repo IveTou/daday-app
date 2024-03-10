@@ -12,9 +12,10 @@ export async function createUserDTO(userData: UserDTO) {
 
     const user = await prisma.user.create({
       data: {
+        ...userData,
         id: currentUser.id,
         role: currentUser.role,
-        ...userData
+        email: userData.email ?? currentUser.email,
       }
     })
 

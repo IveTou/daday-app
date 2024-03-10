@@ -3,6 +3,7 @@ import prisma from '../../shared/lib/prisma/prisma';
 import { getSession } from '@auth0/nextjs-auth0';
 
 
+//TODO: move this to data acess layer
 const getBoards = async () => {
   'use server'
   const session = await getSession()

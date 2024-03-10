@@ -6,13 +6,22 @@ export enum UserRoles {
 
 export class User {
   id: string
+  email: string
   role: UserRoles
 
-  constructor(
+  constructor({
+    id,
+    email,
+    role = UserRoles.USER
+  }
+  :
+  {
     id: string,
-    role: UserRoles = UserRoles.USER,
-  ){
+    email: string,
+    role?: UserRoles
+  }){
 		this.id = id
+    this.email = email
     this.role = role
 	}
 }

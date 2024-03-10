@@ -2,7 +2,6 @@
 
 import { getUserDTO, createUserDTO } from "@/data/user/user-dto"
 import { ProfileType, FieldProfileErrorsType } from "@/entities/user/types";
-import { getSession } from '@auth0/nextjs-auth0';
 import { z } from 'zod'
 
 const schema = z.object({
@@ -21,17 +20,10 @@ const schema = z.object({
 })
 
 
-//TODO: think about change this to comply to FSD
 export async function createProfile(prevState: any, formData: FormData): Promise<ActionDataState<ProfileType, FieldProfileErrorsType>> {
-  const session = await getSession();
-  const userId = session?.user.sub
-
-  if(!userId) throw new Error()
-
   const validatedFields = schema.safeParse({
-    id: userId,
     name: formData.get('name'),
-    email: formData.get('email') || session?.user.email,
+    email: formData.get('email'),
     address: formData.get('address'),
     phone: formData.get('phone'),
   })

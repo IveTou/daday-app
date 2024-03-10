@@ -8,7 +8,7 @@ import { createProfile } from "./actions";
 import Modal from "@/components/Modal";
 import { useModal } from "@refinedev/core";
 
-export default function ProfileClient() {
+export default function Profile() {
   const dispatch = useDispatch()
   const { profile } = useSelector((state) => state.profile)
   const { show, close, visible } = useModal()

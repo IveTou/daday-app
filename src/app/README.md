@@ -1,6 +1,6 @@
 # Architecture concerns
 
-## Concepts
+## App
 
 Into **Feature Sliced Design** "app" folder means **Pages Layer** Layer wich for NextJs's App Router concept it means routes, whether api or pages.
 

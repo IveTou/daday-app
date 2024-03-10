@@ -4,8 +4,8 @@ import { User } from '@/entities/user/User';
 
 export const getCurrentUser = cache(async () => {
   const session = await getSession();
-  const userId = session?.user.sub
+  const id: string = session?.user.sub
+  const email: string = session?.user.email
 
-  //Get user permitions provided externaly
-  return new User(userId/*, role */);
+  return new User({ id, email });
 });

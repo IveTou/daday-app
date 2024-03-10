@@ -1,6 +1,7 @@
 import { getSession } from '@auth0/nextjs-auth0';
 
 export default async function ProfileServer() {
+  //TODO: change this to access DTO instead
   const session = await getSession();
 
   return (
