@@ -1,4 +1,4 @@
-import { getUserDTO } from "@/data/user-dto"
+import { getUserDTO } from "@/data/user/user-dto"
 import { NextRequest } from "next/server";
 
 export const dynamic = 'force-dynamic'

@@ -1,7 +1,6 @@
 'use server'
 
-import { getUserDTO } from "@/data/user-dto"
-import { createUserDTO } from '@/data/user-dto';
+import { getUserDTO, createUserDTO } from "@/data/user/user-dto"
 import { ProfileType, FieldProfileErrorsType } from "@/entities/user/types";
 import { getSession } from '@auth0/nextjs-auth0';
 import { z } from 'zod'
@@ -22,7 +21,7 @@ const schema = z.object({
 })
 
 
-
+//TODO: think about change this to comply to FSD
 export async function createProfile(prevState: any, formData: FormData): Promise<ActionDataState<ProfileType, FieldProfileErrorsType>> {
   const session = await getSession();
   const userId = session?.user.sub
